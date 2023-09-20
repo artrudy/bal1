@@ -7,12 +7,12 @@ body {
     height: 100vh;
     background: linear-gradient(to top, $gradient-start, $gradient-end);
     display: grid;
-    grid-template-columns: 1fr auto; /* Place the counter in the right column */
+    grid-template-columns: 1fr auto; 
     overflow: hidden;
 }
 
 .counter {
-    grid-column: 2; /* Place the counter in the right column */
+    grid-column: 2; 
     padding: 10px;
     font-size: 18px;
     color: white;
