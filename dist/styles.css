@@ -1,0 +1,46 @@
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  background: linear-gradient(to top, #aeabc7, #381566);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  /* Place the counter in the right column */
+  overflow: hidden;
+}
+
+.counter {
+  grid-column: 2;
+  /* Place the counter in the right column */
+  padding: 10px;
+  font-size: 18px;
+  color: white;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.balloon {
+  width: 60px;
+  height: 100px;
+  background-image: url("../balloon.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  cursor: pointer;
+  animation: float 5s ease-in-out forwards;
+  opacity: 1;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-100vh);
+    opacity: 0.6;
+  }
+}
