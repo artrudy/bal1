@@ -1,6 +1,64 @@
 let animationInterval: number;
 let triesLeft = 10;
 let clickedBalloons = 0;
+let username: string | null = null;
+let maxScore = 0;
+
+// Load user data from localStorage or initialize an empty array
+let userData: { username: string; maxScore: number }[] = JSON.parse(
+  localStorage.getItem("userData") || "[]"
+);
+
+function askForUsernameAndInitializeGame() {
+  userNameFromInput = prompt("Please enter your name:");
+  console.log(`${userNameFromInput}`, userNameFromInput);
+
+  if (!localStorage.getItem(`${userNameFromInput}`)) {
+    localStorage.setItem(`${userNameFromInput}`, `${userNameFromInput}`);
+  }
+
+  userNameFromStorage = localStorage.getItem(`${userNameFromInput}`);
+  console.log("userNameFromStorage", userNameFromStorage);
+
+  // if (userNameFromInput)
+  //   if (!username) {
+  //     // If it doesn't exist, prompt the user for their name
+  //     username = prompt("Please enter your name:");
+
+  //     if (username) {
+  //       // Save the username to localStorage
+  //       localStorage.setItem("username", username);
+
+  //       // Initialize or find the user's maxScore
+  //       const existingUser = userData.find(
+  //         (user) => user.username === username
+  //       );
+  //       if (existingUser) {
+  //         maxScore = existingUser.maxScore;
+  //       } else {
+  //         userData.push({ username, maxScore });
+  //         localStorage.setItem("userData", JSON.stringify(userData));
+  //       }
+
+  //       alert(`Welcome, ${username}! Let's start the game.`);
+  //     }
+  //   } else {
+  //     // If the name already exists, set the maxScore
+  //     const existingUser = userData.find((user) => user.username === username);
+  //     if (existingUser) {
+  //       maxScore = existingUser.maxScore;
+  //     }
+
+  //     alert(`Welcome back, ${username}! Let's continue the game.`);
+  //   }
+
+  // Start the game
+  initializeGame();
+}
+
+function initializeGame() {
+  createBalloon();
+}
 
 function createBalloon() {
   const balloon = document.createElement("div");
@@ -40,9 +98,22 @@ function updateTriesLeft() {
   }
 
   if (triesLeft <= 0) {
+    // Save the result of the last game to localStorage
+    localStorage.setItem(
+      `${username}_lastGameScore`,
+      clickedBalloons.toString()
+    );
+
+    // Check if the user's score exceeded the maximum
+    if (clickedBalloons > maxScore) {
+      maxScore = clickedBalloons;
+      localStorage.setItem("maxScore", maxScore.toString());
+      alert(`New high score! Your maximum score is now ${maxScore}`);
+    }
+
     clearInterval(animationInterval); // Stop the animation
-    const ballons = document.querySelectorAll(".ballon");
-    alert("Game Over");
+    const ballons = document.querySelectorAll(".balloon");
+    alert(`Game Over. Your score: ${clickedBalloons}`);
   }
 }
 
@@ -54,5 +125,5 @@ function updateScoreCounter() {
   }
 }
 
-animationInterval = setInterval(createBalloon, 1000);
-createBalloon();
+animationInterval = setInterval(initializeGame, 1000);
+askForUsernameAndInitializeGame();
