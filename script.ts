@@ -3,22 +3,27 @@ let triesLeft = 10;
 let clickedBalloons = 0;
 let username: string | null = null;
 let maxScore = 0;
+const player = {
+  playerName: "playerName",
+  playerMaxScore: 0,
+};
 
 // Load user data from localStorage or initialize an empty array
-let userData: { username: string; maxScore: number }[] = JSON.parse(
-  localStorage.getItem("userData") || "[]"
-);
+// let userData: { username: string; maxScore: number }[] = JSON.parse(
+//   localStorage.getItem("userData") || "[]"
+// );
 
 function askForUsernameAndInitializeGame() {
   userNameFromInput = prompt("Please enter your name:");
   console.log(`${userNameFromInput}`, userNameFromInput);
+  if (userNameFromInput === null || userNameFromInput === "") {
+    askForUsernameAndInitializeGame();
+  }
 
   if (!localStorage.getItem(`${userNameFromInput}`)) {
     localStorage.setItem(`${userNameFromInput}`, `${userNameFromInput}`);
-  }
-
-  userNameFromStorage = localStorage.getItem(`${userNameFromInput}`);
-  console.log("userNameFromStorage", userNameFromStorage);
+    alert(`Welcome, ${userNameFromInput}! Let's start the game.`);
+  } else alert(`Welcome back ${userNameFromInput}!`);
 
   // if (userNameFromInput)
   //   if (!username) {
@@ -40,7 +45,6 @@ function askForUsernameAndInitializeGame() {
   //         localStorage.setItem("userData", JSON.stringify(userData));
   //       }
 
-  //       alert(`Welcome, ${username}! Let's start the game.`);
   //     }
   //   } else {
   //     // If the name already exists, set the maxScore
